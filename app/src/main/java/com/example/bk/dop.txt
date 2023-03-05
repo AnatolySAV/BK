@@ -1,0 +1,131 @@
+ 
+
+
+  
+def clicked():
+  global Numb_Hod, Vsego, Mesto, You_chislo,My_popitrasklad
+  #здесь проверка заполнения пользователя
+  #вывод ответа и перевод на следующую попытку
+ 
+ # btn.grid(column=6, row=btn.grid_info()['row'] + 2)
+  You_chislo = you_chislo[Numb_Hod].get()
+  if You_chislo=='':
+    return
+  You_popitrasklad = list(You_chislo)
+  for i in range(0,len(You_popitrasklad)):
+    You_popitrasklad[i]=int(You_popitrasklad[i])
+  
+  [You_Vsego,You_Mesto] = Vsego_Mesto(You_popitrasklad,My_zadum)
+   
+  my_otvet[Numb_Hod].config(text=str(You_Vsego)+':'+str(You_Mesto))
+
+  if You_zadum.get()!='':
+    You_zadum_INT=You_zadum.get()
+    Poisk2=list(You_zadum_INT)
+    for int1 in range(0,len(Poisk2)):
+      Poisk2[int1]=int(Poisk2[int1])
+    You_zadum['state']='disabled'
+    
+    [Vsego,Mesto]=Vsego_Mesto(My_popitrasklad,Poisk2)
+   
+    you_otvet_vsego[Numb_Hod].current(Vsego)
+    you_otvet_mesto[Numb_Hod].current(Mesto)
+
+  else:  
+    Vsego=int(you_otvet_vsego[Numb_Hod].get())
+    Mesto=int(you_otvet_mesto[Numb_Hod].get())
+    
+  if (Mesto == 4) or (You_Mesto == 4):
+    if (Mesto == 4) and (You_Mesto == 4):
+      res = messagebox.askyesno('НИЧЬЯ!!!', 'Ещё раз?')
+      if res==False:
+        quit()
+      else:
+        restart()
+        return
+    if (Mesto == 4):
+      res = messagebox.askyesno('Вы проиграли, увы!!!', 'Ещё раз?')
+      if res==False:
+        quit()
+      else:
+        restart()
+        return
+
+    if You_Mesto == 4:
+      res = messagebox.askyesno('Вы выиграли, поздравляю!!!', 'Ещё раз?')
+
+      if res==False:
+        quit()
+      else:
+        restart()
+        return
+    
+      
+  YouPoptka()
+
+  Numb_Hod+=1
+  btn.grid(column=6, row=Numb_Hod*2+1)
+  
+  MyPopytka()
+  txt=str(My_popitrasklad[0])+str(My_popitrasklad[1])+str(My_popitrasklad[2])+str(My_popitrasklad[3])
+  
+  my_chislo[Numb_Hod].config(text=txt)
+  you_chislo[Numb_Hod].focus()
+ 
+  you_chislo[Numb_Hod]['state']='normal'
+  you_otvet_mesto[Numb_Hod]['state']='normal'
+  you_otvet_vsego[Numb_Hod]['state']='normal'
+  you_chislo[Numb_Hod-1]['state']='disabled'
+  you_otvet_mesto[Numb_Hod-1]['state']='disabled'
+  you_otvet_vsego[Numb_Hod-1]['state']='disabled'
+
+# Основная программа
+You_chislo = 0
+You_zadum_INT = ''
+You_Vsego=0
+You_Mesto=0
+Mesto=0
+Vsego=0
+
+MyPoisk =[]
+My_popitrasklad=[0,0,0,0]
+for i1 in range(0, 10):
+  for i2 in range(0, 10):
+    if i2 != i1:
+      for i3 in range(0, 10):
+        if (i3!= i2) and (i3!= i1):
+          for i4 in range(0, 10):
+            if (i4!= i3) and (i4!= i2) and (i4!= i1):
+              MyPoisk.append([i1,i2,i3,i4,True])
+
+My_popitrasklad=Rand_List()
+
+# Задуманное
+
+My_zadum=Rand_List()
+
+window = Tk()
+window.title("Игра Быки и Коровы")
+window.geometry('360x340')
+lbls = []
+you_chislo = []
+my_otvet = []
+my_otvet_vsego = []
+my_otvet_mesto = []
+my_chislo = []
+you_otvet_vsego = []
+you_otvet_mesto = []  
+pravila = Label(window, text='Игрок и комп загадывают по одному\n4-х значному числу без повторов.\n Слева Ваши ходы, справа компа.', fg="red")
+pravila.grid(column=1, row=15, columnspan=6)
+You_zadumLab = Label(window, text='Ваше:', fg="red")
+You_zadumLab.grid(column=6, row=0, columnspan=1)
+You_zadum = Entry(window, width=4)
+You_zadum.grid(column=7, row=0)
+
+CountS = 10*9*8*7
+
+Numb_Hod=0
+start_init()
+
+btn = Button(window, text="Вперед!", command=clicked)
+btn.grid(column=6, row=1)

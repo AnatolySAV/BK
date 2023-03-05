@@ -1,0 +1,29 @@
+ AlertDialog.Builder alertDialog = new AlertDialog.Builder(MyActivity.this);
+    // Указываем Title
+    alertDialog.setTitle("Подтвердить удаление...");
+
+    // Указываем текст сообщение
+    alertDialog.setMessage("Вы уверены, что хотите это удалить?");
+
+    // задаем иконку
+//    alertDialog.setIcon(R.drawable.delete);
+
+    // Обработчик на нажатие ДА
+    alertDialog.setPositiveButton("ДА", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog,int which) {
+            // Код который выполнится после закрытия окна
+            Toast.makeText(getApplicationContext(), "Вы нажали ДА", Toast.LENGTH_SHORT).show();
+        }
+    });
+
+    // Обработчик на нажатие НЕТ
+    alertDialog.setNegativeButton("НЕТ", new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+            // Код который выполнится после закрытия окна
+            Toast.makeText(getApplicationContext(), "Вы нажали НЕТ", Toast.LENGTH_SHORT).show();
+            dialog.cancel();
+        }
+    });
+
+    // показываем Alert
+    alertDialog.show();

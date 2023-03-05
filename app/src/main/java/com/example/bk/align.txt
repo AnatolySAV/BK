@@ -1,0 +1,13 @@
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    textView.justificationMode = JUSTIFICATION_MODE_INTER_WORD
+}
+
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    textView.setJustificationMode(JUSTIFICATION_MODE_INTER_WORD);
+}
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:justificationMode="inter_word" />
+}

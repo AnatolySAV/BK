@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:orderInCategory="1"
+        android:title="Настройки"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/rules"
+        android:icon="@android:drawable/ic_dialog_alert"
+        android:orderInCategory="2"
+        android:title="Правила"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/statistic"
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:orderInCategory="3"
+        android:title="Статистика"
+        app:showAsAction="never" />
+</menu>

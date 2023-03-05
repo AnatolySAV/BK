@@ -1,0 +1,183 @@
+def Rand_List():
+  i1=randint(0,9)
+  List=[0,0,0,0]
+  List[0]=i1
+  i2=i1
+  while i2==i1:
+    i2=randint(0,9)
+  List[1]=i2
+  i3=i2
+  while i3==i2 or i3==i1:
+    i3=randint(0,9)
+  List[2]=i3
+  i4=i3
+  while i4==i3 or i4==i2 or i4==i1:
+    i4=randint(0,9)
+  List[3]=i4
+  return List
+
+def Vsego_Mesto(Test,Osn):
+  
+  Test_Vsego=0
+  Test_Mesto=0
+ 
+  if Test[0]==Osn[0]:
+    Test_Vsego+=1
+    Test_Mesto+=1
+  if Test[1]==Osn[1]:
+    Test_Vsego+=1
+    Test_Mesto+=1
+  if Test[2]==Osn[2]:
+    Test_Vsego+=1
+    Test_Mesto+=1
+  if Test[3]==Osn[3]:
+    Test_Vsego+=1
+    Test_Mesto+=1
+  if (Test[0]==Osn[1]) or (Test[0]==Osn[2]) or (Test[0]==Osn[3]): 
+    Test_Vsego+=1
+  if (Test[1]==Osn[0]) or (Test[1]==Osn[2]) or (Test[1]==Osn[3]): 
+    Test_Vsego+=1
+  if (Test[2]==Osn[1]) or (Test[2]==Osn[0]) or (Test[2]==Osn[3]): 
+    Test_Vsego+=1
+  if (Test[3]==Osn[1]) or (Test[3]==Osn[2]) or (Test[3]==Osn[0]): 
+    Test_Vsego+=1
+  return([Test_Vsego,Test_Mesto])
+
+def YouPoptka():
+  global You_Vsego, You_Mesto
+
+# Нужно ещё проверить, что введено число и что все цифры разные
+  You_popitrasklad = list(You_chislo)
+  for i in range(0,len(You_popitrasklad)):
+    You_popitrasklad[i]=int(You_popitrasklad[i])
+  
+  [You_Vsego,You_Mesto] = Vsego_Mesto(You_popitrasklad,My_zadum)
+   
+  my_otvet[Numb_Hod].config(text=str(You_Vsego)+':'+str(You_Mesto))
+  
+  
+def MyPopytka():
+  global Vsego, Mesto, CountS, My_popitrasklad
+# Дальше собственно перебор вариантов и отметка неподходящих
+  for Poisk in MyPoisk:
+    if Poisk[4]==True:
+      [Test_Vsego,Test_Mesto] = Vsego_Mesto(My_popitrasklad,Poisk)
+      if ((Test_Vsego!=Vsego) or (Test_Mesto!=Mesto)):
+        Poisk[4]=False
+      else:
+        Poisk[4]=True
+
+        CountS-=1
+  CCC=True
+  ii=0
+  while CCC and ii<10*9*8*7:
+    if MyPoisk[ii][4]==True:
+      CCC=False
+      My_popitrasklad[0] = MyPoisk[ii][0]
+      My_popitrasklad[1] = MyPoisk[ii][1]
+      My_popitrasklad[2] = MyPoisk[ii][2]
+      My_popitrasklad[3] = MyPoisk[ii][3]
+    ii+=1
+  if CCC==True:
+    messagebox.showinfo('Ошибка!!!', 'Вы где-то ошиблись в ответах!!!')
+    quit()
+ 
+def restart():
+  global Numb_Hod, Vsego, Mesto,My_popitrasklad, My_zadum
+
+  You_Vsego=0
+  You_Mesto=0
+  Mesto=0
+  Vsego=0
+  My_popitrasklad = [0,0,0,0]
+  My_popitrasklad=Rand_List()
+  My_zadum=Rand_List()
+
+  for Poisk in MyPoisk:
+    Poisk[4]=True
+  
+  You_zadum['state']='normal'
+  You_zadum.delete(0,"end")
+  You_zadum.insert(0, '')
+
+  for i in range(0, 7):
+    my_chislo[i].config(text='    ')
+ 
+    you_chislo[i]['state']='normal'
+    you_chislo[i].delete(0,"end")
+    you_chislo[i].insert(0, '')
+    you_chislo[i]['state']='disabled'
+    
+    you_otvet_mesto[i]['state']='disabled'
+    you_otvet_mesto[i].current(0)
+    my_otvet[i].config(text=' _:_ ')
+  
+    you_otvet_vsego[i]['state']='disabled'
+    you_otvet_vsego[i].current(0)
+  Numb_Hod=0
+
+  btn.grid(column=6, row=Numb_Hod*2+1)
+  you_chislo[Numb_Hod]['state']='normal'
+  you_otvet_mesto[Numb_Hod]['state']='normal'
+  you_otvet_vsego[Numb_Hod]['state']='normal'
+  
+# you_chislo[Numb_Hod].grid(column=1, row=Numb_Hod * 2 + 1)
+#  you_chislo[Numb_Hod].grid(column=1, row=i * 2 + 1)
+#  you_chislo[Numb_Hod].grid(column=1, row=i * 2 + 1)
+
+#  MyPopytka()
+  txt=str(My_popitrasklad[0])+str(My_popitrasklad[1])+str(My_popitrasklad[2])+str(My_popitrasklad[3])
+#  print(txt)
+#  print(Numb_Hod)
+  my_chislo[Numb_Hod].config(text=txt)
+  you_chislo[Numb_Hod].focus()
+
+  
+  CountS=1
+  
+def start_init():
+  col_set1 = Label(window, text='Всего')
+  col_set1.grid(column=4, row=0, columnspan=1)
+  col_set2 = Label(window, text='Место')
+  col_set2.grid(column=5, row=0, columnspan=1)
+  for i in range(0, 7):
+    lbls.append(Label(window, text=str(i + 1)))
+    lbls[i].grid(column=0, row=i * 2 + 1)
+    if i > 0:
+      you_chislo.append(Entry(window, width=4, state='disabled'))
+    else:
+      you_chislo.append(Entry(window, width=4))
+    you_chislo[i].grid(column=1, row=i * 2 + 1)
+
+    my_otvet_vsego.append(0)
+    my_otvet_mesto.append(0)
+    my_otvet.append(Label(window, text=' _:_ '))
+    my_otvet[i].grid(column=2, row=i * 2 + 1)
+
+    my_chislo.append(Label(window, text='    '))
+    my_chislo[i].grid(column=3, row=i * 2 + 1)
+
+    if i > 0:
+      you_otvet_vsego.append(Combobox(window, state='disabled'))
+    else:
+      you_otvet_vsego.append(Combobox(window))
+    you_otvet_vsego[i]['values'] = ('0', '1', '2', '3', '4')
+    you_otvet_vsego[i]['height'] = 5
+    you_otvet_vsego[i]['width'] = 1
+    you_otvet_vsego[i].current(0)
+    you_otvet_vsego[i].grid(column=4, row=i * 2 + 1, columnspan=1)
+    if i > 0:
+      you_otvet_mesto.append(Combobox(window, state='disabled'))
+    else:
+      you_otvet_mesto.append(Combobox(window))
+    you_otvet_mesto[i]['values'] = ('0', '1', '2', '3', '4')
+    you_otvet_mesto[i]['height'] = 5
+    you_otvet_mesto[i]['width'] = 1
+    you_otvet_mesto[i].current(0)
+    you_otvet_mesto[i].grid(column=5, row=i * 2 + 1, columnspan=1)
+
+  you_chislo[0].focus()
+  txt=str(My_popitrasklad[0])+str(My_popitrasklad[1])+str(My_popitrasklad[2])+str(My_popitrasklad[3])
+  my_chislo[0].config(text=txt)
+  col_set1 = Label(window, text='Всего')
+  col_set1.grid(column=4, row=0, columnspan=1)

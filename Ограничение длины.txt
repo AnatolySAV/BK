@@ -1,0 +1,15 @@
+
+fun TextView.addFilter(filter: InputFilter) {
+  filters = if (filters.isNullOrEmpty()) {
+    arrayOf(filter)
+  } else {
+    filters.toMutableList()
+      .apply {
+        removeAll { it.javaClass == filter.javaClass }
+        add(filter)
+      }
+      .toTypedArray()
+  }
+}
+
+textView.addFilter(InputFilter.LengthFilter(10))

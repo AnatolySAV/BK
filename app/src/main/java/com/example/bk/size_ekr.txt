@@ -1,0 +1,25 @@
+Display display1 = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display1.getRealSize(size);
+        int scrWidth = size.x;
+        int scrHeight = size.y;
+
+
+вар 2
+                                                                                                      ё
+DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+int width = metrics.widthPixels;
+int height = metrics.heightPixels;
+
+вар 3
+val display: Display = windowManager.defaultDisplay
+val point = Point()
+display.getSize(point)
+val screenWidth: Int = point.x
+val screenHeight: Int = point.y
+
+// Теперь получим необходимую информацию
+val width = Integer.toString(screenWidth)
+val height = Integer.toString(screenHeight)
+
+val info = "Ширина: $width; Высота: $height"
